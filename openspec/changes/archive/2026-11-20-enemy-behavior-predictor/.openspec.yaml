@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-11-20
+goal: Entregar una implementación trazable por especificaciones, con backend
+  FastAPI/NumPy y frontend React/TypeScript.
