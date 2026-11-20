@@ -74,3 +74,30 @@ def test_prediction_endpoint_rejects_invalid_matrix(matrix):
 def test_prediction_endpoint_rejects_missing_matrix():
     response = client.post("/api/predict", json={})
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize("origin", ["http://localhost:5174", "http://127.0.0.1:5180"])
+def test_cors_preflight_allows_local_development_ports(origin):
+    response = client.options(
+        "/api/predict",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == origin
+
+
+def test_cors_preflight_rejects_remote_origin():
+    response = client.options(
+        "/api/predict",
+        headers={
+            "Origin": "http://192.168.1.20:5174",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+    assert response.status_code == 400
+    assert "access-control-allow-origin" not in response.headers

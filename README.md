@@ -113,7 +113,7 @@ Abre `http://localhost:5173`. `VITE_API_URL` permite cambiar la URL base del bac
 - Solicitud: `{ "matrix": [[0.75,0.25,0],[0.1,0.6,0.3],[0.2,0.3,0.5]] }`.
 - Respuesta 200: `initial_state`, `steps` y `predictions`, cada una con el número de pasos y un vector de probabilidades en orden P/C/A.
 - Errores: HTTP 422 para JSON ausente o mal formado, dimensiones incorrectas, valores no finitos/fuera de rango o filas que no suman 1 con tolerancia absoluta `1e-12`. El detalle identifica la entrada que debe corregirse.
-- CORS permite `http://localhost:5173` y `http://127.0.0.1:5173` durante desarrollo.
+- CORS permite los orígenes HTTP/HTTPS de `localhost` y `127.0.0.1` en cualquier puerto local, para admitir el puerto alternativo que Vite elija. Los orígenes externos se rechazan.
 
 ## Pruebas
 
